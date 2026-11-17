@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://127.0.0.1:5500/admin/admin.html -->
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Daily Wishes ♡</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./Admin Dashboard - Daily Wishes ♡_files/css2" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #f7a9c4;
+      --deep: #c95f8a;
+      --ink: #5c3547;
+      --bg: #fff5f8;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --font-heading: "Playfair Display", Georgia, serif;
+      --font-body: "Be Vietnam Pro", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: linear-gradient(135deg, #fff1f6 0%, #ffe0ec 50%, #fceafa 100%);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      width: min(100%, 760px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+    header h1 {
+      font-family: var(--font-heading);
+      color: #c45f89;
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+    header p {
+      margin: 0;
+      color: #a77c90;
+      font-size: 13px;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(190, 100, 140, 0.12);
+      backdrop-filter: blur(10px);
+    }
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      color: var(--deep);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .stat-box {
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #f5dce6;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--deep);
+      margin-top: 4px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #a77c90;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-seen { background: #e8f5e9; color: #2e7d32; }
+    .status-unseen { background: #ffebee; color: #c62828; }
+    .status-penalty { background: #ffebee; color: #d32f2f; font-weight: bold; }
+    .status-pass { background: #e3f2fd; color: #1976d2; font-weight: bold; }
+
+    .list-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+    .item-card {
+      background: white;
+      border: 1px solid #f5dce6;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #b88ba0;
+      margin-bottom: 6px;
+      border-bottom: 1px dashed #f5dce6;
+      padding-bottom: 6px;
+    }
+    .item-body {
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    button {
+      border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer;
+      font-family: var(--font-body); font-size: 12px; font-weight: 600;
+      transition: transform .2s, box-shadow .2s;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(201,95,138,.2); }
+    .btn-primary { background: linear-gradient(135deg, #f3a8c2, #df80a5); color: white; }
+    .btn-danger { background: #fff0f3; color: #b84e70; border: 1px solid #f5c2d3; }
+    .btn-sec { background: #fff; color: #c16b91; border: 1px solid #f5d2df; }
+
+    .actions-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #c49ba9;
+      font-size: 13px;
+      padding: 20px 0;
+    }
+
+    .setup-guide {
+      background: rgba(255,255,255,0.6);
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #8c5b70;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <div class="container">
+    <header>
+      <h1>Bảng Điều Khiển Admin 👑</h1>
+      <p>Theo dõi xem Lời Chúc, Tâm Tư &amp; Kế Hoạch Tuần của người ấy (Tự động cập nhật trực tiếp)</p>
+    </header>
+
+    <!-- Thống kê xem & Điểm danh -->
+    <div class="card">
+      <h2>Trạng Thái Tháng &amp; Điểm Danh 📌</h2>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-label">Hôm nay mở web chưa?</div>
+          <div id="todayStatus" style="margin-top:6px;"><span class="badge-status status-seen">✓ Đã Xem (11:38)</span></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Điểm danh tích lũy</div>
+          <div class="stat-number" id="streakCount">1/30 ngày</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Trạng thái tháng</div>
+          <div id="monthStatus" style="margin-top:6px;"><span class="badge-status" style="background:#fff3e0; color:#e65100;">⏳ Đang diễn ra (1/30)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danh sách Tâm tư gửi về -->
+    <div class="card">
+      <h2>💬 Tâm Tư Nguyện Vọng</h2>
+      <div id="notesList" class="list-box"><div class="item-card">
+            <div class="item-header">
+              <span>👤 Bé Yêu</span>
+              <span>🕒 11:43:53 16/11/2026</span>
+            </div>
+            <div class="item-body">hhhi</div>
+          </div></div>
+    </div>
+
+    <!-- Danh sách Kế hoạch tuần -->
+    <div class="card">
+      <h2>📅 Kế Hoạch Trong Tuần</h2>
+      <div id="plansList" class="list-box"><div class="empty-state">Chưa có kế hoạch tuần nào.</div></div>
+      <div class="actions-bar">
+        <button class="btn-danger" id="clearDataBtn">🗑 Xóa Lịch Sử Tâm Tư</button>
+      </div>
+    </div>
+
+    <div class="setup-guide">
+      💡 <strong>Tự động hoàn toàn:</strong> Trang Admin này sẽ <strong>tự động làm mới và cập nhật liên tục mỗi giây</strong>. Khi người nhận vừa mở web điểm danh hay gửi tin nhắn mới, bạn sẽ thấy ngay lập tức trên màn hình này mà không cần bấm nút tải lại!
+    </div>
+  </div>
+
+  <script type="module">
+
+import { createClient }
+from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL =
+  'https://envpdufjfclpnqygxrfl.supabase.co';
+
+const SUPABASE_KEY =
+  'sb_publishable_qfHG3ox5ILnRs4e2g8-fsA_Z-xHZSdl';
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+    const recipientName = "Bé Yêu";
+
+    function loadAdminDashboard() {
+      const now = new Date();
+      const currentMonthKey = `${now.getFullYear()}_${now.getMonth() + 1}`;
+      const todayStr = `${currentMonthKey}_${now.getDate()}`;
+      const recordRaw = localStorage.getItem(`seen_${todayStr}`);
+      const todayStatusEl = document.getElementById("todayStatus");
+
+      // 1. Kiểm tra trạng thái xem ngày hôm nay
+      if (recordRaw) {
+        try {
+          const rec = JSON.parse(recordRaw);
+          todayStatusEl.innerHTML = `<span class="badge-status status-seen">✓ Đã Xem (${rec.time || 'Hôm nay'})</span>`;
+        } catch (_) {
+          todayStatusEl.innerHTML = `<span class="badge-status status-seen">✓ Đã Xem</span>`;
+        }
+      } else {
+        todayStatusEl.innerHTML = `<span class="badge-status status-unseen">✕ Chưa Xem</span>`;
+      }
+
+      // 2. Điểm danh và trạng thái tháng
+      const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      const streakData = JSON.parse(localStorage.getItem("wish_streak_data") || `{"month":"${currentMonthKey}","days":[]}`);
+      
+      if (streakData.month !== currentMonthKey) {
+        streakData.days = [];
+      }
+      const totalChecked = streakData.days.length;
+      document.getElementById("streakCount").textContent = `${totalChecked}/${lastDayOfMonth} ngày`;
+
+      const monthStatusEl = document.getElementById("monthStatus");
+      if (now.getDate() === lastDayOfMonth || totalChecked >= lastDayOfMonth) {
+        if (totalChecked >= lastDayOfMonth) {
+          monthStatusEl.innerHTML = `<span class="badge-status status-pass">✨ Hoàn thành xuất sắc!</span>`;
+        } else {
+          monthStatusEl.innerHTML = `<span class="badge-status status-penalty">⚠️ BỊ PHẠT (Thiếu ngày)!</span>`;
+        }
+      } else {
+        monthStatusEl.innerHTML = `<span class="badge-status" style="background:#fff3e0; color:#e65100;">⏳ Đang diễn ra (${totalChecked}/${lastDayOfMonth})</span>`;
+      }
+
+      // 3. Danh sách Tâm tư nguyện vọng
+      const notesListEl = document.getElementById("notesList");
+      const savedNotes = JSON.parse(localStorage.getItem("admin_notes_history") || "[]");
+      notesListEl.replaceChildren();
+
+      if (savedNotes.length === 0) {
+        notesListEl.innerHTML = `<div class="empty-state">Chưa có tâm sự mới nào được gửi.</div>`;
+      } else {
+        savedNotes.slice().reverse().forEach(item => {
+          const card = document.createElement("div");
+          card.className = "item-card";
+          card.innerHTML = `
+            <div class="item-header">
+              <span>👤 ${recipientName}</span>
+              <span>🕒 ${item.time || ''}</span>
+            </div>
+            <div class="item-body">${escapeHtml(item.content)}</div>
+          `;
+          notesListEl.appendChild(card);
+        });
+      }
+
+      // 4. Kế hoạch tuần
+      const plansListEl = document.getElementById("plansList");
+      const savedPlans = JSON.parse(localStorage.getItem("weekly_plans") || "[]");
+      plansListEl.replaceChildren();
+
+      if (savedPlans.length === 0) {
+        plansListEl.innerHTML = `<div class="empty-state">Chưa có kế hoạch tuần nào.</div>`;
+      } else {
+        savedPlans.forEach(plan => {
+          const card = document.createElement("div");
+          card.className = "item-card";
+          const statusTag = plan.done ? `<span style="color:#2e7d32; font-weight:bold;">[Đã Xong]</span>` : `<span style="color:#c62828;">[Chưa làm]</span>`;
+          card.innerHTML = `
+            <div class="item-body">
+              ${statusTag} <strong>${escapeHtml(plan.title)}</strong>
+            </div>
+          `;
+          plansListEl.appendChild(card);
+        });
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    document.getElementById("clearDataBtn").addEventListener("click", () => {
+      if (confirm("Bạn có muốn dọn dẹp lịch sử tâm sự không?")) {
+        localStorage.removeItem("admin_notes_history");
+        loadAdminDashboard();
+      }
+    });
+
+    // TỰ ĐỘNG CẬP NHẬT MỖI GIÂY (REAL-TIME AUTO REFRESH)
+    loadAdminDashboard();
+    setInterval(loadAdminDashboard, 1000);
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
